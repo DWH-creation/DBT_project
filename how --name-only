@@ -1,0 +1,204 @@
+[33mcommit 1aeb64c147995fd8ccd21abfe85f39a2fb4fd74e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: Julia888-M <julia.nikishova84@yandex.ru>
+Date:   Thu Nov 27 17:49:10 2025 +0000
+
+     On branch master
+     Initial commit
+     Changes to be committed:
+            new file:   .gitignore
+            new file:   README.md
+            new file:   Screenshot_2025-11-27_11-45-18.png
+            new file:   analyses/.gitkeep
+            new file:   dbt_project.yml
+            new file:   macros/.gitkeep
+            new file:   models/example/my_first_dbt_model.sql
+            new file:   models/example/my_second_dbt_model.sql
+            new file:   models/example/schema.yml
+            new file:   models/mart/mart_sales.sql
+            new file:   models/ods/ods_orders.sql
+            new file:   models/ods/ods_products.sql
+            new file:   models/ods/ods_users.sql
+            new file:   models/stg/stg_orders.sql
+            new file:   models/stg/stg_products.sql
+            new file:   models/stg/stg_users.sql
+            new file:   seeds/.gitkeep
+            new file:   seeds/raw_orders.csv
+            new file:   seeds/raw_products.csv
+            new file:   seeds/raw_users.csv
+            new file:   snapshots/.gitkeep
+            new file:   tests/.gitkeep
+
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..49f147c[m
+[1m--- /dev/null[m
+[1m+++ b/.gitignore[m
+[36m@@ -0,0 +1,4 @@[m
+[32m+[m
+[32m+[m[32mtarget/[m
+[32m+[m[32mdbt_packages/[m
+[32m+[m[32mlogs/[m
+[1mdiff --git a/README.md b/README.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7874ac8[m
+[1m--- /dev/null[m
+[1m+++ b/README.md[m
+[36m@@ -0,0 +1,15 @@[m
+[32m+[m[32mWelcome to your new dbt project![m
+[32m+[m
+[32m+[m[32m### Using the starter project[m
+[32m+[m
+[32m+[m[32mTry running the following commands:[m
+[32m+[m[32m- dbt run[m
+[32m+[m[32m- dbt test[m
+[32m+[m
+[32m+[m
+[32m+[m[32m### Resources:[m
+[32m+[m[32m- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)[m
+[32m+[m[32m- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers[m
+[32m+[m[32m- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support[m
+[32m+[m[32m- Find [dbt events](https://events.getdbt.com) near you[m
+[32m+[m[32m- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices[m
+[1mdiff --git a/Screenshot_2025-11-27_11-45-18.png b/Screenshot_2025-11-27_11-45-18.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..51dcae0[m
+Binary files /dev/null and b/Screenshot_2025-11-27_11-45-18.png differ
+[1mdiff --git a/analyses/.gitkeep b/analyses/.gitkeep[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/dbt_project.yml b/dbt_project.yml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ae82a14[m
+[1m--- /dev/null[m
+[1m+++ b/dbt_project.yml[m
+[36m@@ -0,0 +1,36 @@[m
+[32m+[m
+[32m+[m[32m# Name your project! Project names should contain only lowercase characters[m
+[32m+[m[32m# and underscores. A good package name should reflect your organization's[m
+[32m+[m[32m# name or the intended use of these models[m
+[32m+[m[32mname: 'dbtproject'[m
+[32m+[m[32mversion: '1.0.0'[m
+[32m+[m
+[32m+[m[32m# This setting configures which "profile" dbt uses for this project.[m
+[32m+[m[32mprofile: 'dbtproject'[m
+[32m+[m
+[32m+[m[32m# These configurations specify where dbt should look for different types of files.[m
+[32m+[m[32m# The `model-paths` config, for example, states that models in this project can be[m
+[32m+[m[32m# found in the "models/" directory. You probably won't need to change these![m
+[32m+[m[32mmodel-paths: ["models"][m
+[32m+[m[32manalysis-paths: ["analyses"][m
+[32m+[m[32mtest-paths: ["tests"][m
+[32m+[m[32mseed-paths: ["seeds"][m
+[32m+[m[32mmacro-paths: ["macros"][m
+[32m+[m[32msnapshot-paths: ["snapshots"][m
+[32m+[m
+[32m+[m[32mclean-targets:         # directories to be removed by `dbt clean`[m
+[32m+[m[32m  - "target"[m
+[32m+[m[32m  - "dbt_packages"[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# Configuring models[m
+[32m+[m[32m# Full documentation: https://docs.getdbt.com/docs/configuring-models[m
+[32m+[m
+[32m+[m[32m# In this example config, we tell dbt to build all models in the example/[m
+[32m+[m[32m# directory as views. These settings can be overridden in the individual model[m
+[32m+[m[32m# files using the `{{ config(...) }}` macro.[m
+[32m+[m[32mmodels:[m
+[32m+[m[32m  dbtproject:[m
+[32m+[m[32m    # Config indicated by + and applies to all files under models/example/[m
+[32m+[m[32m    example:[m
+[32m+[m[32m      +materialized: view[m
+[1mdiff --git a/macros/.gitkeep b/macros/.gitkeep[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/models/example/my_first_dbt_model.sql b/models/example/my_first_dbt_model.sql[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f31a12d[m
+[1m--- /dev/null[m
+[1m+++ b/models/example/my_first_dbt_model.sql[m
+[36m@@ -0,0 +1,27 @@[m
+[32m+[m
+[32m+[m[32m/*[m
+[32m+[m[32m    Welcome to your first dbt model![m
+[32m+[m[32m    Did you know that you can also configure models directly within SQL files?[m
+[32m+[m[32m    This will override configurations stated in dbt_project.yml[m
+[32m+[m
+[32m+[m[32m    Try changing "table" to "view" below[m
+[32m+[m[32m*/[m
+[32m+[m
+[32m+[m[32m{{ config(materialized='table') }}[m
+[32m+[m
+[32m+[m[32mwith source_data as ([m
+[32m+[m
+[32m+[m[32m    select 1 as id[m
+[32m+[m[32m    union all[m
+[32m+[m[32m    select null as id[m
+[32m+[m
+[32m+[m[32m)[m
+[32m+[m
+[32m+[m[32mselect *[m
+[32m+[m[32mfrom source_data[m
+[32m+[m
+[32m+[m[32m/*[m
+[32m+[m[32m    Uncomment the line below to remove records with null `id` values[m
+[32m+[m[32m*/[m
+[32m+[m
+[32m+[m[32m-- where id is not null[m
+[1mdiff --git a/models/example/my_second_dbt_model.sql b/models/example/my_second_dbt_model.sql[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c91f879[m
+[1m--- /dev/null[m
+[1m+++ b/models/example/my_second_dbt_model.sql[m
+[36m@@ -0,0 +1,6 @@[m
+[32m+[m
+[32m+[m[32m-- Use the `ref` function to select from other models[m
+[32m+[m
+[32m+[m[32mselect *[m
+[32m+[m[32mfrom {{ ref('my_first_dbt_model') }}[m
+[32m+[m[32mwhere id = 1[m
+[1mdiff --git a/models/example/schema.yml b/models/example/schema.yml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9730b70[m
+[1m--- /dev/null[m
+[1m+++ b/models/example/schema.yml[m
+[36m@@ -0,0 +1,21 @@[m
+[32m+[m
+[32m+[m[32mversion: 2[m
+[32m+[m
+[32m+[m[32mmodels:[m
+[32m+[m[32m  - name: my_first_dbt_model[m
+[32m+[m[32m    description: "A starter dbt model"[m
+[32m+[m[32m    columns:[m
+[32m+[m[32m      - name: id[m
+[32m+[m[32m        description: "The primary key for this table"[m
+[32m+[m[32m        data_tests:[m
+[32m+[m[32m          - unique[m
+[32m+[m[32m          - not_null[m
+[32m+[m
+[32m+[m[32m  - name: my_second_dbt_model[m
+[32m+[m[32m    description: "A starter dbt model"[m
+[32m+[m[32m    columns:[m
+[32m+[m[32m      - name: id[m
+[32m+[m[32m        description: "The primary key for this table"[m
+[32m+[m[32m        data_tests:[m
+[32m+[m[32m          - unique[m
+[32m+[m[32m          - not_null[m
+[1mdiff --git a/models/mart/mart_sales.sql b/models/mart/mart_sales.sql[m
+[1mnew file mode 100644[m
+[1mindex 0000000..50924a9[m
+[1m--- /dev/null[m
+[1m+++ b/models/mart/mart_sales.sql[m
+[36m@@ -0,0 +1,42 @@[m
+[32m+[m[32m{{[m
+[32m+[m[32mconfig([m
+[32m+[m[32mmaterialized='view',[m
+[32m+[m[32malias='mart_sales'[m
+[32m+[m[32m)[m
+[32m+[m[32m}}[m
+[32m+[m[32mwith t1 as ([m
+[32m+[m[32m    select[m[41m [m
+[32m+[m[32m        order_id,[m
+[32m+[m[32m        user_id,[m
+[32m+[m[32m        sum(order_amount) as order_amount,[m
+[32m+[m[32m        order_status,[m
+[32m+[m[32m        extract(MONTH fr
