@@ -33,6 +33,15 @@ pip install dbt-core dbt-postgres - Эта команда установит
 Загрузить файлы в БД:
 dbt seed
 
+Add stg-tables into dbt:
+dbt run --select models/stg
+
+Add ods-tables into dbt:
+dbt run --select models/ods
+
+Add mart-view into dbt:
+dbt run --select models/mart
+
 Выйти из виртуального окружения
 deactivate
 
